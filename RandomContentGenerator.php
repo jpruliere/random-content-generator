@@ -135,10 +135,34 @@ class RandomContentGenerator {
         return $this->_generateModel();
     }
 
+    public function fetchObj($class) {
+        $data = $this->_generateModel();
+        $object = new $class();
+        foreach ($data as $prop => $value) {
+            $words = explode('_', $prop);
+            array_walk($words, function(&$word) {
+                $word = ucfirst($word);
+            });
+            $setter = "set".implode('', $words);
+            if (!method_exists($class, $setter))
+                throw new Exception("No setter found for '$prop' property on class '$class', expected $class::$setter(\$$prop)");
+            $object->$setter($value);
+        }
+        return $object;
+    }
+
     public function fetchAll() {
         $results = [];
         for ($i=0; $i < $this->volume; $i++) { 
             $results[] = $this->fetch();
+        }
+        return $results;
+    }
+
+    public function fetchAllObj($class) {
+        $results = [];
+        for ($i=0; $i < $this->volume; $i++) { 
+            $results[] = $this->fetchObj($class);
         }
         return $results;
     }
@@ -207,9 +231,3 @@ class RandomContentGenerator {
         return "https://picsum.photos/{$propOptions['width']}/{$propOptions['height']}?image=".mt_rand(0, self::PICSUM_MAX_ID);
     }
 }
-
-header('Content-type:text/plain;charset=utf8');
-
-$rcg = new RandomContentGenerator(['id' => 'i:0-1000', 'rate' => 'f:0-5', 'title' => 't:4-6w', 'content' => 't:5s', 'image' => 'p:400*300']);
-
-var_dump($rcg->fetchAll());

@@ -17,6 +17,10 @@ $gen = new RandomContentGenerator(['id' => 'i:0-10000', 'title' => 't:3-10w', 'i
 $gen->fetchAll(); // all at once
 // $gen->fetch(); // or line by line
 
+// or get model instances directly
+$gen->fetchAllObj(ArtworkModel::class); // all at once
+// $gen->fetchObj(ArtworkModel::class); // or one by one
+
 ```
 
 ## Not fast enough ?
@@ -29,9 +33,13 @@ RCG comes with a built-in collection of 20 items with the following model :
 
 If you are happy with these settings, skip the parameters in the constructor ;-)
 
+## Changelog
+
+v1.0.0 - initial commit
+v1.1.0 - fetching as objects is available
+
 ## Coming soon
 
-- Fetching as objects
 - Date type
 - Nested entity type
 
