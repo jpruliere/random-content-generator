@@ -1,7 +1,7 @@
 RandomContentGenerator, random content generator :smirk:
 ========================================================
 
-RCG is a PHP class to be used as a mock Model layer. Its constructor takes a model array (see description above) and the expected collection size as parameters. Then you just have to call fetch() or fetchAll() on the generator and it will return one or many associative arrays containing randomly generated info.
+RCG is a PHP class to be used as a mock Model layer. Its constructor takes a model array (see description below) and the expected collection size as parameters. Then you just have to call fetch() or fetchAll() on the generator and it will return one or many associative arrays containing randomly generated info.
 
 ```php
 // create a new generator with this simple line
